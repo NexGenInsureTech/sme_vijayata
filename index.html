@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vणिज्य Vijayta - Commercial Lines Rewards Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Background: Amber-50, Text: Gray-800, Primary/Accent: Teal-600/700) -->
+    <!-- Application Structure Plan: A top-down narrative SPA structure is used to guide the user from understanding the program's 'why' to exploring the 'what' and 'how'. It starts with a Hero section for engagement, moves to program details for clarity, then to an interactive rewards explorer, and culminates in a personal simulator. This flow is more intuitive than a fragmented report, turning a passive document into an active goal-setting tool. A leaderboard is included at the end to foster a sense of community and competition. Navigation is handled by a sticky header with smooth-scrolling links. -->
+    <!-- Visualization & Content Choices: 
+    - Report Info: Program Tiers & Rewards -> Goal: Organize & Inform -> Viz/Presentation: Interactive Accordion -> Interaction: Click to expand/collapse -> Justification: Prevents information overload by showing one tier at a time, making rewards easily digestible. Method: HTML/CSS/JS.
+    - Report Info: GWP-to-Reward Calculation -> Goal: Engage & Compare -> Viz/Presentation: Interactive Simulator with Slider & Chart -> Interaction: User inputs projected GWP via slider/input box -> Justification: This is the core engagement tool. It gamifies goal setting and provides immediate, personalized feedback, now including specific reward value calculations. Method: HTML Inputs, JS for logic.
+    - Report Info: Tier GWP Thresholds vs User Projection -> Goal: Compare & Motivate -> Viz/Presentation: Bar Chart -> Interaction: Chart updates dynamically based on simulator input -> Justification: Visually represents the user's position relative to the goals, making the next step tangible and motivating. Library: Chart.js.
+    - Report Info: Program Flow -> Goal: Organize & Inform -> Viz/Presentation: Enhanced step-by-step visual diagram -> Interaction: Static visual aid -> Justification: Simplifies the program mechanics into a clear, linear process with better visual cues. Method: HTML/Tailwind CSS Grid.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #0d9488;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 4px solid #fdf2f8;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .custom-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #0d9488;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 4px solid #fdf2f8;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .flow-arrow {
+            color: #5eead4;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-gray-800">
+
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-teal-700">Vणिज्य Vijayta</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#details" class="text-gray-600 hover:text-teal-600 font-medium">Program Details</a>
+                <a href="#philosophy" class="text-gray-600 hover:text-teal-600 font-medium">Our Philosophy</a>
+                <a href="#program-nuances" class="text-gray-600 hover:text-teal-600 font-medium">Program Nuances</a>
+                <a href="#rewards" class="text-gray-600 hover:text-teal-600 font-medium">Rewards</a>
+                <a href="#simulator" class="text-gray-600 hover:text-teal-600 font-medium">Simulator</a>
+                <a href="#leaderboard" class="text-gray-600 hover:text-teal-600 font-medium">Champions</a>
+            </div>
+            <a href="#simulator" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 font-semibold shadow hidden md:block">Try Simulator</a>
+             <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <span class="text-2xl">☰</span>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <a href="#details" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Program Details</a>
+            <a href="#philosophy" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Our Philosophy</a>
+            <a href="#program-nuances" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Program Nuances</a>
+            <a href="#rewards" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Rewards</a>
+            <a href="#simulator" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Simulator</a>
+            <a href="#leaderboard" class="block py-2 px-4 text-sm text-gray-600 hover:bg-amber-50">Champions</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="relative py-20 sm:py-24 lg:py-32 bg-white">
+            <div class="absolute inset-0 bg-grid-teal-50/10 [mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]"></div>
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight">
+                    Become a <span class="text-teal-600">Commercial Champion</span>
+                </h1>
+                <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+                    An exclusive rewards and recognition program to celebrate and empower our valued intermediary partners driving the future of Commercial Lines insurance.
+                </p>
+                <div class="mt-10 flex justify-center items-center gap-4">
+                    <a href="#details" class="bg-teal-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-teal-700 shadow-lg transition-transform transform hover:scale-105">
+                        Explore the Program
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="details" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Your Path to Victory</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">This program is designed to be simple, transparent, and rewarding. Understand the core principles and how you can start earning today. The journey from writing a policy to receiving your reward is straightforward, focusing on what matters most: our mutual growth.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                     <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center">
+                         <h3 class="font-bold text-teal-700 text-xl">Campaign Period</h3>
+                         <p class="text-gray-800 text-lg mt-2 font-medium">July 1, 2025 - December 31, 2025</p>
+                         <p class="text-gray-500 text-sm mt-1">All GWP booked within this period is eligible.</p>
+                     </div>
+                     <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center">
+                         <h3 class="font-bold text-teal-700 text-xl">Earning Points</h3>
+                         <p class="text-gray-800 text-lg mt-2 font-medium">1 Point = ₹10,000 GWP</p>
+                         <p class="text-gray-500 text-sm mt-1">Points are calculated automatically and updated monthly.</p>
+                     </div>
+                     <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center">
+                         <h3 class="font-bold text-teal-700 text-xl">Eligible Partners</h3>
+                         <p class="text-gray-800 text-lg mt-2 font-medium">Brokers, Agents, IMFs, POSPs</p>
+                         <p class="text-gray-500 text-sm mt-1">All active partners are auto-enrolled.</p>
+                     </div>
+                </div>
+
+                <div class="mt-20 max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-900 text-center">Eligible Business Lines</h3>
+                    <p class="text-center text-gray-600 mt-2">This program is exclusively for Non-Motor & Non-Retail Health Commercial products.</p>
+                    <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Property & Fire</span></div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Engineering</span></div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Marine Cargo</span></div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Liability</span></div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Group Health</span></div>
+                        <div class="bg-teal-50 p-4 rounded-lg"><span class="font-medium text-teal-800">Miscellaneous</span></div>
+                    </div>
+                    <p class="text-center text-red-600 mt-8 font-semibold">Excluded: All Retail Motor and Retail Health policies.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="philosophy" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Program Philosophy: Beyond Transactions</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">This program is built on the foundation of a true partnership, recognizing that sustainable growth comes from more than just financial incentives. We aim to foster deep engagement and loyalty by addressing your professional aspirations and recognizing your unique contributions to the commercial lines business.</p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                        <h3 class="text-2xl font-bold text-teal-700">Tangible Benefits: Fueling Your Growth</h3>
+                        <p class="mt-4 text-gray-600">We provide competitive financial rewards, including tiered commissions and performance-based bonuses, ensuring your efforts are directly compensated. These incentives are designed to provide a strong foundation for your business and personal financial security, allowing you to focus on expanding your commercial portfolio.</p>
+                        <ul class="mt-4 text-gray-600 list-disc list-inside space-y-2">
+                            <li>Higher commissions for strategic commercial products.</li>
+                            <li>Bonuses for new business acquisition and crucial renewals.</li>
+                            <li>Long-term incentives for consistent portfolio growth.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                        <h3 class="text-2xl font-bold text-teal-700">Psychological Rewards: Building Your Legacy</h3>
+                        <p class="mt-4 text-gray-600">Beyond monetary gains, we believe in recognizing your expertise, fostering your professional development, and building a strong community. This addresses your desire for respect, achievement, and personal growth, motivating you to become a trusted advisor in complex commercial risks.</p>
+                        <ul class="mt-4 text-gray-600 list-disc list-inside space-y-2">
+                            <li>Exclusive recognition clubs and prestigious awards.</li>
+                            <li>Advanced professional development and specialized training.</li>
+                            <li>Enhanced operational support and cutting-edge digital tools.</li>
+                            <li>Mentorship and peer learning opportunities.</li>
+                            <li>Community building events and brand advocacy.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-16 text-center max-w-3xl mx-auto">
+                    <h3 class="text-2xl font-bold text-gray-900">Sustainable Performance: The Balance</h3>
+                    <p class="mt-4 text-lg text-gray-600">The program's true strength lies in the interplay between tangible and psychological rewards. While financial incentives (Hygiene Factors) prevent dissatisfaction and provide a foundation, non-monetary benefits (Motivators) actively drive satisfaction, loyalty, and intrinsic desire to excel. This balance ensures we attract and retain top talent, drive quality business, and build resilience in the face of commercial market complexities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="program-nuances" class="py-20 sm:py-24 bg-amber-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Understanding the Vणिज्य Vijayta R&R Program: Intricacies and Nuances</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">The "Vणिज्य Vijayta" program is meticulously designed to go beyond simple sales incentives, creating a psychologically balanced and sustainable motivation framework tailored for each intermediary category. It integrates financial rewards with professional growth and recognition, reflecting the insights from the "Commercial Insurance Intermediary Rewards Design" research.</p>
+                </div>
+
+                <div class="mt-16 max-w-4xl mx-auto space-y-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-teal-700">1. Core Mechanics: Points and Tiers</h3>
+                        <p class="mt-4 text-gray-600">The fundamental workout of the program revolves around Gross Written Premium (GWP) and points:</p>
+                        <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
+                            <li><strong class="font-semibold">Point Earning:</strong> For every <strong class="font-semibold">₹10,000 GWP</strong> generated in eligible Commercial Lines business (excluding Retail Motor and Retail Health), an intermediary earns <strong class="font-semibold">1 Point</strong>. This simple conversion provides a clear, transparent metric for performance.</li>
+                            <li><strong class="font-semibold">Tier Achievement:</strong> Intermediaries progress through predefined tiers (Bronze, Silver, Gold, Platinum, Diamond) by accumulating points. Each tier has a specific minimum GWP (and thus point) threshold. As an intermediary achieves a higher tier, they unlock progressively more valuable and prestigious rewards.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-teal-700">2. The Nuance of Tailored Rewards by Intermediary Category</h3>
+                        <p class="mt-4 text-gray-600">The core intricacy of the program lies in its <strong class="font-semibold">differentiated approach</strong> for each intermediary type: Brokers, Insurance Marketing Firms (IMFs), Individual Agents, and Point of Sale Persons (POSPs). This tailoring acknowledges their distinct roles, motivations, and relevance to the commercial LOB, as identified in the research.</p>
+                        <p class="mt-2 text-gray-600">Below is a detailed workout for each category:</p>
+
+                        <div class="mt-8 space-y-8">
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                                <h4 class="text-xl font-bold text-gray-900">2.1. For Brokers: Incentivizing Expertise and Complex Deals</h4>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">Role & Motivation:</strong> Brokers are experts in complex risk management and client advisory, motivated by commissions, building trust, and leveraging their professional expertise for tailored solutions.</p>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">GWP Thresholds (Higher):</strong> Brokers have the highest GWP thresholds for each tier, reflecting their capacity to handle larger, more complex commercial accounts.</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li><strong class="font-semibold">Bronze Club:</strong> ₹7.5 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Silver Club:</strong> ₹20 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Gold Club:</strong> ₹40 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Platinum Club:</strong> ₹80 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Diamond Circle:</strong> ₹1.5 Crore GWP</li>
+                                </ul>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Tangible Benefits Workout:</strong> Beyond fixed gifts (Bronze), Silver Club offers <strong class="font-semibold">E-Vouchers worth 0.30% of GWP</strong>. This percentage-based reward directly scales with the value of the business they bring, incentivizing high-value policies. Higher tiers offer premium domestic and luxury international trips, or high-end gadgets, aligning with their high-earning potential and desire for aspirational rewards.</p>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Psychological Rewards Workout:</strong> These focus on enhancing their professional standing and providing tools for complex advisory:</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Access to Exclusive Broker Webinars, Advanced Risk Advisory Modules.</li>
+                                    <li>"Gold Partner" Status & Logo Usage, Dedicated Senior Relationship Manager, Co-branding for Case Studies.</li>
+                                    <li>Invitation to Annual Broker Summit, Seat on "Chairman's Advisory Council", Priority Access to New Commercial Products. These fulfill their need for esteem, recognition, and self-actualization as strategic partners.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                                <h4 class="text-xl font-bold text-gray-900">2.2. For IMFs: Driving Network Expansion and Quality Aggregation</h4>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">Role & Motivation:</strong> IMFs specialize in building and managing extensive distribution networks, motivated by market reach expansion, financial stability, and employing qualified professionals.</p>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">GWP Thresholds (Mid-High):</strong> Their thresholds are substantial, reflecting their aggregated GWP from their sub-networks.</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li><strong class="font-semibold">Bronze Club:</strong> ₹10 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Silver Club:</strong> ₹30 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Gold Club:</strong> ₹60 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Platinum Club:</strong> ₹1 Crore GWP</li>
+                                    <li><strong class="font-semibold">Diamond Circle:</strong> ₹1.8 Crore GWP</li>
+                                </ul>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Tangible Benefits Workout:</strong> Bronze offers a "Network Activation Bonus," directly rewarding their core function of expanding distribution. Silver Club provides <strong class="font-semibold">E-Vouchers worth 0.28% of GWP</strong>, incentivizing higher aggregated premium. Higher tiers offer domestic and international <em class="font-semibold">team</em> retreats/trips, or high-value team incentives (e.g., Office Upgrade Fund), recognizing their collective effort and network-centric model.</p>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Psychological Rewards Workout:</strong> These focus on empowering their network and enhancing their strategic partnership:</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>"Network Growth Leader" Recognition, Access to IMF-specific Commercial Sales Strategies.</li>
+                                    <li>Co-funding for Local Commercial Awareness Campaigns, Dedicated Relationship Manager for Commercial Portfolio.</li>
+                                    <li>"Strategic Partner" Status, Early Access to New Commercial Products, Joint Marketing Initiatives, Feature in Company Annual Report, Co-creation Opportunities for Commercial Solutions. These cater to their organizational growth, market differentiation, and strategic influence.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                                <h4 class="text-xl font-bold text-gray-900">2.3. For Individual Agents: Facilitating Transition and Skill Enhancement</h4>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">Role & Motivation:</strong> Individual agents excel at personalized service and relationship building, motivated by financial independence, flexible hours, and opportunities for recognition and skill development.</p>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">GWP Thresholds (Mid-Low):</strong> Their thresholds are set to encourage entry into commercial lines and gradual growth.</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li><strong class="font-semibold">Bronze Club:</strong> ₹3 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Silver Club:</strong> ₹10 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Gold Club:</strong> ₹20 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Platinum Club:</strong> ₹40 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Diamond Circle:</strong> ₹70 Lakh GWP</li>
+                                </ul>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Tangible Benefits Workout:</strong> Bronze offers a "Welcome Bonus for First Commercial Policy," specifically designed to lower the barrier to entry into commercial sales. Silver Club provides <strong class="font-semibold">E-Vouchers worth 0.20% of GWP</strong>, a lower percentage reflecting their smaller average policy sizes but still incentivizing growth. Higher tiers offer domestic/international trips for one, or luxury gadgets, appealing to their personal aspirations.</p>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Psychological Rewards Workout:</strong> These focus on skill transition, confidence building, and recognition for diversification:</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>"SME Champion" Digital Badge, Mentorship opportunity with Senior Agent.</li>
+                                    <li>Access to Basic Commercial Product Training, Webinar on Identifying SME Needs, Feature in Agent Spotlight.</li>
+                                    <li>Dedicated Support for Complex Commercial Queries, Opportunity to Lead Peer Learning Sessions, Invitation to Annual Leadership Meet, Opportunity to Mentor New Agents. These address their need for competence, recognition, and professional advancement in a new domain.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                                <h4 class="text-xl font-bold text-gray-900">2.4. For POSPs: Simplifying Digital Commercial Sales and Accessibility</h4>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">Role & Motivation:</strong> POSPs thrive on digital-first accessibility and convenience, motivated by zero investment, timely payouts, and income flexibility. They are ideal for micro-SME penetration.</p>
+                                <p class="mt-2 text-gray-600"><strong class="font-semibold">GWP Thresholds (Lowest):</strong> Their thresholds are the lowest, focusing on volume of simpler commercial products.</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li><strong class="font-semibold">Bronze Club:</strong> ₹1 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Silver Club:</strong> ₹5 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Gold Club:</strong> ₹15 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Platinum Club:</strong> ₹30 Lakh GWP</li>
+                                    <li><strong class="font-semibold">Diamond Circle:</strong> ₹50 Lakh GWP</li>
+                                </ul>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Tangible Benefits Workout:</strong> Bronze offers a "Bonus for 5 Digital Commercial Policies," directly incentivizing digital adoption and volume of small commercial policies. Silver Club provides <strong class="font-semibold">E-Vouchers worth 0.15% of GWP</strong>, the lowest percentage, aligning with their focus on high-volume, lower-value transactions. Higher tiers offer practical gadgets (tablet, laptop) or cash bonuses, directly supporting their digital-first, low-overhead business model.</p>
+                                <p class="mt-4 text-gray-600"><strong class="font-semibold">Psychological Rewards Workout:</strong> These focus on digital proficiency, efficiency, and micro-segment recognition:</p>
+                                <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">
+                                    <li>"Digital Commercial Star" Badge, Access to Simplified Digital Training Modules.</li>
+                                    <li>Dedicated Online Support for Commercial Sales, Recognition on Digital Leaderboard.</li>
+                                    <li>"Top Digital Performer" Award, Advanced Training on Digital Sales Tools, Feature in POSP Success Stories, Direct Feedback Channel to Product Team. These reinforce their digital strengths and provide avenues for growth within their unique operational model.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold text-teal-700">3. The Psychological Balance: Tangible Meets Intangible</h3>
+                        <p class="mt-4 text-gray-600">The program's true "workout" lies in the interplay between tangible and psychological rewards for all categories:</p>
+                        <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
+                            <li><strong class="font-semibold">Hygiene Factors (Tangible):</strong> The financial rewards (e.g., commissions, e-vouchers, trips) serve as "Hygiene Factors." They prevent dissatisfaction and provide the necessary financial foundation, ensuring intermediaries are compensated competitively for their efforts. The tiered and percentage-based structures ensure these are competitive and scale with performance.</li>
+                            <li><strong class="font-semibold">Motivators (Psychological):</strong> The non-monetary benefits (e.g., recognition, training, advisory roles, community) act as "Motivators." These actively drive satisfaction, loyalty, and intrinsic motivation. They cater to higher-order needs like esteem and self-actualization, fostering a sense of purpose and professional growth that transcends mere financial gain. This is particularly crucial for commercial lines, which demand resilience and deep expertise.</li>
+                            <li><strong class="font-semibold">Sustainable Performance:</strong> By balancing these two types of motivators, the program aims to:
+                                <ul class="mt-1 list-circle list-inside ml-4 text-gray-600 space-y-1">
+                                    <li><strong class="font-medium">Attract & Retain:</strong> Ensure intermediaries are satisfied with compensation while also feeling valued and professionally fulfilled.</li>
+                                    <li><strong class="font-medium">Drive Quality:</strong> Incentivize not just volume, but also strategic business, client retention, and skill development, which are critical for sustainable commercial LOB growth.</li>
+                                    <li><strong class="font-medium">Build Resilience:</strong> Foster intrinsic motivation, enabling intermediaries to navigate the complexities and longer sales cycles of commercial insurance with greater persistence.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p class="mt-4 text-gray-600">In essence, the "Vणिज्य Vijayta" program is not a one-size-fits-all bonus scheme. It's a strategically layered framework that understands the unique DNA of each intermediary, offering a customized blend of incentives to drive their specific contributions to the Commercial Lines business, thereby building a robust and sustainable distribution ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rewards" class="py-20 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Tiers of Excellence</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Explore the tailored rewards for each intermediary category. Select your type in the simulator below to see how your achievements unlock a world of tangible benefits and prestigious recognition.</p>
+                </div>
+
+                <div id="rewards-container" class="mt-16 max-w-4xl mx-auto space-y-4">
+                    <!-- Rewards will be dynamically loaded here based on intermediary type selection -->
+                    <p class="text-center text-gray-500">Please select an Intermediary Type in the simulator below to view specific tier details and rewards.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulator" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Reward Potential Simulator</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Don't just dream about the rewards, visualize them! Use our interactive simulator to project your earnings based on your Gross Written Premium (GWP) goals. See which tier you can achieve and what prizes await, tailored to your intermediary category.</p>
+                </div>
+
+                <div class="mt-12 max-w-5xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div>
+                                <label for="intermediaryType" class="block text-sm font-medium text-gray-700">Intermediary Type</label>
+                                <select id="intermediaryType" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                                    <option value="Broker">Broker</option>
+                                    <option value="Individual Agent">Individual Agent</option>
+                                    <option value="IMF">IMF</option>
+                                    <option value="POSP">POSP</option>
+                                </select>
+                            </div>
+                             <div>
+                                <label for="gwpInput" class="block text-sm font-medium text-gray-700">Projected Annual GWP (₹)</label>
+                                <input type="number" id="gwpInput" min="0" max="20000000" step="50000" value="2500000" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <input type="range" id="gwpSlider" min="0" max="20000000" step="50000" value="2500000" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer custom-slider">
+                            </div>
+
+                            <div id="simulation-results" class="bg-amber-50 p-6 rounded-lg space-y-3">
+                                <h3 class="text-lg font-semibold text-gray-900">Your Potential Achievement:</h3>
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-gray-600">Points Earned:</span>
+                                    <span id="points-earned" class="text-2xl font-bold text-teal-700">250</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-gray-600">Potential Tier:</span>
+                                    <span id="tier-achieved" class="text-xl font-bold text-teal-700">Silver Club</span>
+                                </div>
+                                <div id="reward-value-wrapper" class="hidden flex justify-between items-baseline pt-2 border-t border-amber-200">
+                                    <span class="text-gray-600">Est. Reward Value:</span>
+                                    <span id="reward-value" class="text-xl font-bold text-teal-700"></span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                                     <div id="progress-bar" class="bg-teal-600 h-2.5 rounded-full" style="width: 50%"></div>
+                                </div>
+                                <p id="next-tier-info" class="text-sm text-center text-gray-600 mt-1">Keep going!</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-3">
+                            <div class="chart-container">
+                                <canvas id="gwpChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="leaderboard" class="py-20 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Current Champions</h2>
+                     <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Celebrating the trailblazers of the current campaign period. Your dedication and performance inspire us all. Let's give a round of applause to our leading partners who are setting the benchmark for excellence.</p>
+                     <p class="text-sm text-gray-500 mt-2">Last Updated: July 20, 2025</p>
+                </div>
+
+                <div class="mt-12 max-w-4xl mx-auto overflow-x-auto">
+                    <div class="bg-white shadow-md rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partner ID</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tier Achieved</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1 🥇</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BRK-MUM-007</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-purple-600">Diamond Circle</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Mumbai</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2 🥈</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">IMF-DEL-021</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-cyan-600">Platinum Club</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Delhi</td>
+                                </tr>
+                                 <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3 🥉</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AGN-BLR-109</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-cyan-600">Platinum Club</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Bengaluru</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BRK-CHN-054</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-amber-600">Gold Club</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Chennai</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">POSP-HYD-852</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-amber-600">Gold Club</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Hyderabad</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+            <p class="font-bold text-lg">Vणिज्य Vijayta Program</p>
+            <p class="mt-2 text-sm text-gray-400">© 2025 Your Insurance Company Pvt. Ltd. All Rights Reserved.</p>
+            <p class="mt-1 text-xs text-gray-500">The program details, terms, and conditions are subject to change at the discretion of the management.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const allRewardsData = {
+                'Broker': [
+                    { name: 'Bronze Club', minGWP: 750000, points: 75, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Premium Corporate Gift Set'}], psychological: ['"Rising Star" Digital Certificate', 'Name on Digital Wall of Fame', 'Access to Exclusive Broker Webinars'] },
+                    { name: 'Silver Club', minGWP: 2000000, points: 200, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.30% of GWP', type: 'percentage', value: 0.0030}], psychological: ['Exclusive Industry Leader Webinar', 'Silver Partner Certificate', 'Access to Advanced Risk Advisory Modules'] },
+                    { name: 'Gold Club', minGWP: 4000000, points: 400, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 2 (Premium)'}], psychological: ['"Gold Partner" Status & Logo Usage', 'Dedicated Senior Relationship Manager', 'Co-branding Opportunity for Case Studies'] },
+                    { name: 'Platinum Club', minGWP: 8000000, points: 800, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 2 (Luxury)'}], psychological: ['Co-branded Marketing Material', 'Feature in Company Newsletter', 'Invitation to Annual Broker Summit'] },
+                    { name: 'Diamond Circle', minGWP: 15000000, points: 1500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury International Trip (Europe) or High-End Gadget (Choice)'}], psychological: ['Seat on "Chairman\'s Advisory Council"', 'Exclusive Gala Dinner with Leadership', 'Priority Access to New Commercial Products'] },
+                ],
+                'Individual Agent': [
+                    { name: 'Bronze Club', minGWP: 300000, points: 30, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Welcome Bonus for First Commercial Policy'}], psychological: ['"SME Champion" Digital Badge', 'Mentorship opportunity with Senior Agent'] },
+                    { name: 'Silver Club', minGWP: 1000000, points: 100, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.20% of GWP', type: 'percentage', value: 0.0020}], psychological: ['Access to Basic Commercial Product Training', 'Silver Partner Certificate', 'Webinar on Identifying SME Needs'] },
+                    { name: 'Gold Club', minGWP: 2000000, points: 200, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 1'}], psychological: ['"Gold Partner" Status', 'Advanced Training on Specific Commercial Products', 'Feature in Agent Spotlight'] },
+                    { name: 'Platinum Club', minGWP: 4000000, points: 400, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 1'}], psychological: ['Dedicated Support for Complex Commercial Queries', 'Opportunity to Lead Peer Learning Sessions'] },
+                    { name: 'Diamond Circle', minGWP: 7000000, points: 700, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury Gadget or Cash Equivalent'}], psychological: ['Invitation to Annual Leadership Meet', 'Opportunity to Mentor New Agents'] },
+                ],
+                'IMF': [
+                    { name: 'Bronze Club', minGWP: 1000000, points: 100, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Network Activation Bonus (Fixed Amount)'}], psychological: ['"Network Growth Leader" Recognition', 'Access to IMF-specific Commercial Sales Strategies'] },
+                    { name: 'Silver Club', minGWP: 3000000, points: 300, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.28% of GWP', type: 'percentage', value: 0.0028}], psychological: ['Co-funding for Local Commercial Awareness Campaigns', 'Dedicated Relationship Manager for Commercial Portfolio'] },
+                    { name: 'Gold Club', minGWP: 6000000, points: 600, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Team Retreat'}], psychological: ['"Strategic Partner" Status', 'Early Access to New Commercial Products', 'Joint Marketing Initiatives'] },
+                    { name: 'Platinum Club', minGWP: 10000000, points: 1000, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Team Trip (Asia)'}], psychological: ['Feature in Company Annual Report', 'Opportunity to Present at Internal Forums'] },
+                    { name: 'Diamond Circle', minGWP: 18000000, points: 1800, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'High-Value Team Incentive (e.g., Office Upgrade Fund)'}], psychological: ['Invitation to Exclusive Leadership Roundtables', 'Co-creation Opportunities for Commercial Solutions'] },
+                ],
+                'POSP': [
+                    { name: 'Bronze Club', minGWP: 100000, points: 10, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Bonus for 5 Digital Commercial Policies'}], psychological: ['"Digital Commercial Star" Badge', 'Access to Simplified Digital Training Modules'] },
+                    { name: 'Silver Club', minGWP: 500000, points: 50, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.15% of GWP', type: 'percentage', value: 0.0015}], psychological: ['Dedicated Online Support for Commercial Sales', 'Recognition on Digital Leaderboard'] },
+                    { name: 'Gold Club', minGWP: 1500000, points: 150, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Tablet or Smartphone for Business'}], psychological: ['"Top Digital Performer" Award', 'Advanced Training on Digital Sales Tools'] },
+                    { name: 'Platinum Club', minGWP: 3000000, points: 300, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'High-End Laptop or Home Office Setup'}], psychological: ['Feature in POSP Success Stories', 'Opportunity to Test New Digital Features'] },
+                    { name: 'Diamond Circle', minGWP: 5000000, points: 500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Cash Bonus or Luxury Gadget'}], psychological: ['Invitation to Annual POSP Conference', 'Direct Feedback Channel to Product Team'] },
+                ]
+            };
+
+            const intermediaryTypeSelect = document.getElementById('intermediaryType');
+            const rewardsContainer = document.getElementById('rewards-container');
+            const gwpInput = document.getElementById('gwpInput');
+            const gwpSlider = document.getElementById('gwpSlider');
+            const pointsEarnedEl = document.getElementById('points-earned');
+            const tierAchievedEl = document.getElementById('tier-achieved');
+            const rewardValueWrapper = document.getElementById('reward-value-wrapper');
+            const rewardValueEl = document.getElementById('reward-value');
+            const progressBar = document.getElementById('progress-bar');
+            const nextTierInfo = document.getElementById('next-tier-info');
+
+            const gwpChartCanvas = document.getElementById('gwpChart').getContext('2d');
+            let gwpChart;
+            
+            function formatRupee(value, isCompact = false) {
+                 if (isCompact) {
+                    if (value >= 10000000) return `₹${(value / 10000000).toFixed(2)} Cr`;
+                    if (value >= 100000) return `₹${(value / 100000).toFixed(2)} L`;
+                 }
+                 return `₹${Math.round(value).toLocaleString('en-IN')}`;
+            }
+
+            function renderRewardsAccordion(intermediaryType) {
+                const rewardsData = allRewardsData[intermediaryType];
+                rewardsContainer.innerHTML = ''; // Clear previous content
+                if (!rewardsData) {
+                    rewardsContainer.innerHTML = '<p class="text-center text-gray-500">No reward data available for this intermediary type.</p>';
+                    return;
+                }
+
+                rewardsData.forEach(tier => {
+                    const div = document.createElement('div');
+                    div.className = 'border border-gray-200 rounded-lg shadow-sm';
+                    div.innerHTML = `
+                        <button class="w-full flex justify-between items-center p-4 text-left ${tier.bgColor}" data-tier="${tier.name}">
+                            <div class="flex items-center">
+                                <span class="font-bold text-xl ${tier.color}">${tier.name}</span>
+                                <span class="ml-4 text-sm font-medium text-gray-700">(GWP: ₹${(tier.minGWP / 100000).toFixed(0)}L+)</span>
+                            </div>
+                            <span class="text-xl text-gray-500 transform transition-transform duration-300">+</span>
+                        </button>
+                        <div class="hidden p-6 bg-white space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-800">🎁 Tangible Rewards</h4>
+                                    <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">${tier.tangible.map(r => `<li>${r.text}</li>`).join('')}</ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg text-gray-800">🏆 Recognition & Status</h4>
+                                    <ul class="mt-2 list-disc list-inside text-gray-600 space-y-1">${tier.psychological.map(r => `<li>${r}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    rewardsContainer.appendChild(div);
+                });
+
+                rewardsContainer.addEventListener('click', (e) => {
+                    const button = e.target.closest('button');
+                    if (button) {
+                        const content = button.nextElementSibling;
+                        const icon = button.querySelector('span:last-child');
+                        
+                        const allContent = rewardsContainer.querySelectorAll('button + div');
+                        allContent.forEach(c => {
+                           if(c !== content) {
+                               c.classList.add('hidden');
+                               c.previousElementSibling.querySelector('span:last-child').classList.remove('rotate-45');
+                           }
+                        });
+
+                        content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-45');
+                    }
+                });
+            }
+
+            function updateSimulator() {
+                const selectedIntermediaryType = intermediaryTypeSelect.value;
+                const rewardsDataForType = allRewardsData[selectedIntermediaryType];
+
+                if (!rewardsDataForType) {
+                    console.error('No rewards data for selected intermediary type:', selectedIntermediaryType);
+                    return;
+                }
+
+                const gwp = parseInt(gwpInput.value) || 0;
+                
+                if (gwpSlider.value !== gwpInput.value) {
+                    gwpSlider.value = gwp;
+                }
+
+                const points = Math.floor(gwp / 10000);
+                pointsEarnedEl.textContent = points;
+
+                let currentTier = { name: 'No Tier', minGWP: 0, color: 'text-gray-700'};
+                let nextTier = rewardsDataForType[0];
+                for (let i = rewardsDataForType.length - 1; i >= 0; i--) {
+                    if (gwp >= rewardsDataForType[i].minGWP) {
+                        currentTier = rewardsDataForType[i];
+                        nextTier = rewardsDataForType[i + 1]; // This will be undefined if currentTier is the last one
+                        break;
+                    }
+                }
+                
+                tierAchievedEl.textContent = currentTier.name;
+                tierAchievedEl.className = `text-xl font-bold ${currentTier.color}`;
+
+                const calculableReward = currentTier.tangible && currentTier.tangible.find(r => r.type === 'percentage');
+                if (calculableReward) {
+                    const value = gwp * calculableReward.value;
+                    rewardValueEl.textContent = formatRupee(value);
+                    rewardValueWrapper.classList.remove('hidden');
+                } else {
+                    rewardValueWrapper.classList.add('hidden');
+                }
+                
+                let progressPercentage = 0;
+                if(currentTier.name === 'No Tier' && nextTier) {
+                    progressPercentage = (gwp / nextTier.minGWP) * 100;
+                    nextTierInfo.textContent = `Just ${formatRupee(nextTier.minGWP - gwp, true)} more to reach ${nextTier.name}!`;
+                } else if (nextTier) {
+                    const tierRange = nextTier.minGWP - currentTier.minGWP;
+                    const progressInTier = gwp - currentTier.minGWP;
+                    progressPercentage = (progressInTier / tierRange) * 100;
+                    nextTierInfo.textContent = `Only ${formatRupee(nextTier.minGWP - gwp, true)} away from ${nextTier.name}!`;
+                } else {
+                    progressPercentage = 100;
+                    nextTierInfo.textContent = 'Congratulations! You\'ve reached the top tier!';
+                }
+                progressBar.style.width = `${Math.min(progressPercentage, 100)}%`;
+
+                updateChart(gwp, rewardsDataForType);
+            }
+            
+            function updateChart(userGWP, rewardsDataForType) {
+                const chartData = {
+                    labels: rewardsDataForType.map(t => t.name),
+                    datasets: [{
+                        label: 'Tier Minimum GWP',
+                        data: rewardsDataForType.map(t => t.minGWP),
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                        borderColor: 'rgba(13, 148, 136, 1)',
+                        borderWidth: 1,
+                    }, {
+                        label: 'Your Projected GWP',
+                        data: Array(rewardsDataForType.length).fill(userGWP),
+                        backgroundColor: 'rgba(234, 179, 8, 0.6)',
+                        borderColor: 'rgba(234, 179, 8, 1)',
+                        borderWidth: 2,
+                        type: 'line',
+                        fill: false
+                    }]
+                };
+
+                if (gwpChart) {
+                    gwpChart.data = chartData;
+                    gwpChart.update();
+                } else {
+                    gwpChart = new Chart(gwpChartCanvas, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value, index, values) {
+                                            return formatRupee(value, true);
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.dataset.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed.y !== null) {
+                                                label += formatRupee(context.parsed.y);
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+
+            intermediaryTypeSelect.addEventListener('change', () => {
+                renderRewardsAccordion(intermediaryTypeSelect.value);
+                updateSimulator();
+            });
+            gwpInput.addEventListener('input', updateSimulator);
+            gwpSlider.addEventListener('input', (e) => {
+                gwpInput.value = e.target.value;
+                updateSimulator();
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('#mobile-menu a, #header a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement){
+                           const headerOffset = document.getElementById('header').offsetHeight;
+                           const elementPosition = targetElement.getBoundingClientRect().top;
+                           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                           window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                           });
+                        }
+                    }
+                    if(mobileMenu.classList.contains('hidden') === false){
+                       mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Initial render
+            renderRewardsAccordion(intermediaryTypeSelect.value);
+            updateSimulator();
+        });
+    </script>
+</body>
+</html>
