@@ -514,32 +514,32 @@
 
             const allRewardsData = {
                 'Broker': [
-                    { name: 'Bronze Club', minGWP: 750000, points: 75, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Premium Corporate Gift Set'}], psychological: ['"Rising Star" Digital Certificate', 'Name on Digital Wall of Fame', 'Access to Exclusive Broker Webinars'] },
+                    { name: 'Bronze Club', minGWP: 750000, points: 75, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Premium Corporate Gift Set', type: 'fixed', value: 7500}], psychological: ['"Rising Star" Digital Certificate', 'Name on Digital Wall of Fame', 'Access to Exclusive Broker Webinars'] },
                     { name: 'Silver Club', minGWP: 2000000, points: 200, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.30% of GWP', type: 'percentage', value: 0.0030}], psychological: ['Exclusive Industry Leader Webinar', 'Silver Partner Certificate', 'Access to Advanced Risk Advisory Modules'] },
-                    { name: 'Gold Club', minGWP: 4000000, points: 400, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 2 (Premium)'}], psychological: ['"Gold Partner" Status & Logo Usage', 'Dedicated Senior Relationship Manager', 'Co-branding Opportunity for Case Studies'] },
-                    { name: 'Platinum Club', minGWP: 8000000, points: 800, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 2 (Luxury)'}], psychological: ['Co-branded Marketing Material', 'Feature in Company Newsletter', 'Invitation to Annual Broker Summit'] },
-                    { name: 'Diamond Circle', minGWP: 15000000, points: 1500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury International Trip (Europe) or High-End Gadget (Choice)'}], psychological: ['Seat on "Chairman\'s Advisory Council"', 'Exclusive Gala Dinner with Leadership', 'Priority Access to New Commercial Products'] },
+                    { name: 'Gold Club', minGWP: 4000000, points: 400, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 2 (Premium)', type: 'fixed', value: 75000}], psychological: ['"Gold Partner" Status & Logo Usage', 'Dedicated Senior Relationship Manager', 'Co-branding Opportunity for Case Studies'] },
+                    { name: 'Platinum Club', minGWP: 8000000, points: 800, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 2 (Luxury)', type: 'fixed', value: 150000}], psychological: ['Co-branded Marketing Material', 'Feature in Company Newsletter', 'Invitation to Annual Broker Summit'] },
+                    { name: 'Diamond Circle', minGWP: 15000000, points: 1500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury International Trip (Europe) or High-End Gadget (Choice)', type: 'fixed', value: 300000}], psychological: ['Seat on "Chairman\'s Advisory Council"', 'Exclusive Gala Dinner with Leadership', 'Priority Access to New Commercial Products'] },
                 ],
                 'Individual Agent': [
-                    { name: 'Bronze Club', minGWP: 300000, points: 30, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Welcome Bonus for First Commercial Policy'}], psychological: ['"SME Champion" Digital Badge', 'Mentorship opportunity with Senior Agent'] },
+                    { name: 'Bronze Club', minGWP: 300000, points: 30, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Welcome Bonus for First Commercial Policy', type: 'fixed', value: 1000}], psychological: ['"SME Champion" Digital Badge', 'Mentorship opportunity with Senior Agent'] },
                     { name: 'Silver Club', minGWP: 1000000, points: 100, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.20% of GWP', type: 'percentage', value: 0.0020}], psychological: ['Access to Basic Commercial Product Training', 'Silver Partner Certificate', 'Webinar on Identifying SME Needs'] },
-                    { name: 'Gold Club', minGWP: 2000000, points: 200, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 1'}], psychological: ['"Gold Partner" Status', 'Advanced Training on Specific Commercial Products', 'Feature in Agent Spotlight'] },
-                    { name: 'Platinum Club', minGWP: 4000000, points: 400, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 1'}], psychological: ['Dedicated Support for Complex Commercial Queries', 'Opportunity to Lead Peer Learning Sessions'] },
-                    { name: 'Diamond Circle', minGWP: 7000000, points: 700, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury Gadget or Cash Equivalent'}], psychological: ['Invitation to Annual Leadership Meet', 'Opportunity to Mentor New Agents'] },
+                    { name: 'Gold Club', minGWP: 2000000, points: 200, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Holiday Package for 1', type: 'fixed', value: 30000}], psychological: ['"Gold Partner" Status', 'Advanced Training on Specific Commercial Products', 'Feature in Agent Spotlight'] },
+                    { name: 'Platinum Club', minGWP: 4000000, points: 400, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Trip (Asia) for 1', type: 'fixed', value: 75000}], psychological: ['Dedicated Support for Complex Commercial Queries', 'Opportunity to Lead Peer Learning Sessions'] },
+                    { name: 'Diamond Circle', minGWP: 7000000, points: 700, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Luxury Gadget or Cash Equivalent', type: 'fixed', value: 150000}], psychological: ['Invitation to Annual Leadership Meet', 'Opportunity to Mentor New Agents'] },
                 ],
                 'IMF': [
-                    { name: 'Bronze Club', minGWP: 1000000, points: 100, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Network Activation Bonus (Fixed Amount)'}], psychological: ['"Network Growth Leader" Recognition', 'Access to IMF-specific Commercial Sales Strategies'] },
+                    { name: 'Bronze Club', minGWP: 1000000, points: 100, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Network Activation Bonus (Fixed Amount)', type: 'fixed', value: 15000}], psychological: ['"Network Growth Leader" Recognition', 'Access to IMF-specific Commercial Sales Strategies'] },
                     { name: 'Silver Club', minGWP: 3000000, points: 300, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.28% of GWP', type: 'percentage', value: 0.0028}], psychological: ['Co-funding for Local Commercial Awareness Campaigns', 'Dedicated Relationship Manager for Commercial Portfolio'] },
-                    { name: 'Gold Club', minGWP: 6000000, points: 600, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Team Retreat'}], psychological: ['"Strategic Partner" Status', 'Early Access to New Commercial Products', 'Joint Marketing Initiatives'] },
-                    { name: 'Platinum Club', minGWP: 10000000, points: 1000, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Team Trip (Asia)'}], psychological: ['Feature in Company Annual Report', 'Opportunity to Present at Internal Forums'] },
-                    { name: 'Diamond Circle', minGWP: 18000000, points: 1800, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'High-Value Team Incentive (e.g., Office Upgrade Fund)'}], psychological: ['Invitation to Exclusive Leadership Roundtables', 'Co-creation Opportunities for Commercial Solutions'] },
+                    { name: 'Gold Club', minGWP: 6000000, points: 600, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Domestic Team Retreat', type: 'fixed', value: 100000}], psychological: ['"Strategic Partner" Status', 'Early Access to New Commercial Products', 'Joint Marketing Initiatives'] },
+                    { name: 'Platinum Club', minGWP: 10000000, points: 1000, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'International Team Trip (Asia)', type: 'fixed', value: 200000}], psychological: ['Feature in Company Annual Report', 'Opportunity to Present at Internal Forums'] },
+                    { name: 'Diamond Circle', minGWP: 18000000, points: 1800, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'High-Value Team Incentive (e.g., Office Upgrade Fund)', type: 'fixed', value: 500000}], psychological: ['Invitation to Exclusive Leadership Roundtables', 'Co-creation Opportunities for Commercial Solutions'] },
                 ],
                 'POSP': [
-                    { name: 'Bronze Club', minGWP: 100000, points: 10, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Bonus for 5 Digital Commercial Policies'}], psychological: ['"Digital Commercial Star" Badge', 'Access to Simplified Digital Training Modules'] },
+                    { name: 'Bronze Club', minGWP: 100000, points: 10, color: 'text-orange-600', bgColor: 'bg-orange-100', tangible: [{text: 'Bonus for 5 Digital Commercial Policies', type: 'fixed', value: 500}], psychological: ['"Digital Commercial Star" Badge', 'Access to Simplified Digital Training Modules'] },
                     { name: 'Silver Club', minGWP: 500000, points: 50, color: 'text-gray-500', bgColor: 'bg-gray-200', tangible: [{text: 'E-Vouchers worth 0.15% of GWP', type: 'percentage', value: 0.0015}], psychological: ['Dedicated Online Support for Commercial Sales', 'Recognition on Digital Leaderboard'] },
-                    { name: 'Gold Club', minGWP: 1500000, points: 150, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Tablet or Smartphone for Business'}], psychological: ['"Top Digital Performer" Award', 'Advanced Training on Digital Sales Tools'] },
-                    { name: 'Platinum Club', minGWP: 3000000, points: 300, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'High-End Laptop or Home Office Setup'}], psychological: ['Feature in POSP Success Stories', 'Opportunity to Test New Digital Features'] },
-                    { name: 'Diamond Circle', minGWP: 5000000, points: 500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Cash Bonus or Luxury Gadget'}], psychological: ['Invitation to Annual POSP Conference', 'Direct Feedback Channel to Product Team'] },
+                    { name: 'Gold Club', minGWP: 1500000, points: 150, color: 'text-amber-500', bgColor: 'bg-amber-100', tangible: [{text: 'Tablet or Smartphone for Business', type: 'fixed', value: 15000}], psychological: ['"Top Digital Performer" Award', 'Advanced Training on Digital Sales Tools'] },
+                    { name: 'Platinum Club', minGWP: 3000000, points: 300, color: 'text-cyan-600', bgColor: 'bg-cyan-100', tangible: [{text: 'High-End Laptop or Home Office Setup', type: 'fixed', value: 40000}], psychological: ['Feature in POSP Success Stories', 'Opportunity to Test New Digital Features'] },
+                    { name: 'Diamond Circle', minGWP: 5000000, points: 500, color: 'text-purple-600', bgColor: 'bg-purple-100', tangible: [{text: 'Cash Bonus or Luxury Gadget', type: 'fixed', value: 75000}], psychological: ['Invitation to Annual POSP Conference', 'Direct Feedback Channel to Product Team'] },
                 ]
             };
 
@@ -651,10 +651,22 @@
                 tierAchievedEl.textContent = currentTier.name;
                 tierAchievedEl.className = `text-xl font-bold ${currentTier.color}`;
 
-                const calculableReward = currentTier.tangible && currentTier.tangible.find(r => r.type === 'percentage');
-                if (calculableReward) {
-                    const value = gwp * calculableReward.value;
-                    rewardValueEl.textContent = formatRupee(value);
+                let estimatedRewardValue = 0;
+                if (currentTier.name !== 'No Tier') {
+                    currentTier.tangible.forEach(reward => {
+                        if (reward.type === 'percentage') {
+                            estimatedRewardValue += gwp * reward.value;
+                        } else if (reward.type === 'fixed') {
+                            estimatedRewardValue += reward.value;
+                        }
+                    });
+                }
+                
+                if (estimatedRewardValue > 0 || currentTier.name === 'No Tier') { // Always show if a tier is achieved or if it's 'No Tier'
+                    rewardValueEl.textContent = estimatedRewardValue > 0 ? formatRupee(estimatedRewardValue) : 'N/A';
+                    if (currentTier.name !== 'No Tier' && estimatedRewardValue === 0) { // For tiers with non-quantifiable fixed rewards
+                         rewardValueEl.textContent = 'Refer to tier details';
+                    }
                     rewardValueWrapper.classList.remove('hidden');
                 } else {
                     rewardValueWrapper.classList.add('hidden');
